@@ -1,28 +1,21 @@
 var catalogContent;
 
-function initCatalog(){
-    catalogContent = [];
-    catalogContent['phones'] = loadCategory('phones');
-    catalogContent['cameras'] = loadCategory('cameras');
-    catalogContent['players'] = loadCategory('players');
-    catalogContent['tablets'] = loadCategory('tablets');
+async function initCatalog(){
+    catalogContent = {};
+    const categories = ['phones', 'cameras', 'players', 'tablets'];
+    const promises = categories.map(loadCategory);
+    const results = await Promise.all(promises);
+    categories.forEach((c, i) => {
+        catalogContent[c] = results[i];
+    });
 }
 
-function loadCategory(category){
-    var deviceList;
-    var AJAX_req = new XMLHttpRequest();
-    AJAX_req.open('GET', 'models/' + category + '.json', false);
-    AJAX_req.setRequestHeader("Content-type", "application/json");
-
-    AJAX_req.onreadystatechange = function()
-    {
-        if( AJAX_req.readyState == 4 && AJAX_req.status == 200 )
-        {
-            deviceList = JSON.parse( AJAX_req.responseText );
-        }
+async function loadCategory(category){
+    const response = await fetch(`models/${category}.json`);
+    if(!response.ok){
+        throw new Error('Failed to load ' + category);
     }
-    AJAX_req.send();
-    return deviceList;
+    return await response.json();
 }
 
 var maxOnPage = 15;
@@ -73,4 +66,4 @@ function getPageLink(pageNumber, selected){
     return resultingHtml;
 }
 
-initCatalog();
+var catalogReady = initCatalog();
