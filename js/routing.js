@@ -62,4 +62,4 @@ window.addEventListener("hashchange", update, false);
 
 
 hideAll();
-update();
+catalogReady.then(update);
