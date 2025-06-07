@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Technical Market</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/content_slider.css" />
+    <link rel="stylesheet" type="text/css" href="css/menu.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script type="text/javascript" src="js/vendors/jquery.1.3.2.min.js" ></script>
+    <script type="text/javascript" src="js/vendors/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#featured > ul").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 5000, true);
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div id="templatemo_wrapper_outer">
+
+        <div id="templatemo_wrapper">
+
+            <div id="templatemo_header">
+                <div id="site_title">
+                    <h1><img src="images/templatemo_logo.png" alt="logo" /></h1>
+                </div><nav><ul><li id="cart-button"><a id="cart-label"  style="color: darkblue">Корзина </a><a id="cart-counter">0</a></li></ul></nav>
+                <nav> <div class="mainmenu">
+        <ul>
+            <li class="nc"><a href="#" onclick=hideAllPages()>Главная</a></li>
+            <li class="nc"><a href="#" onclick="hideAllPages()">Магазин</a><ul class="ch">
+                <li class="nc"><a href="#!/phones/1" onclick="showPage('catalog')">Телефоны</a></li>
+                <li class="nc"><a href="#!/tablets/1" onclick="showPage('catalog')">Планшеты</a></li>
+                <li class="nc"><a href=#!/cameras/1" onclick="showPage('catalog')">Камеры</a></li>
+                <li class="nc"><a href="#!/players/1" onclick="showPage('catalog')">Аксессуары</a></li>
+            </ul></li><span class="nav-links">
+                        <li class="nc"><a href="#!/booking">Заказ и доставка</a></li>
+                        <li class="nc"><a href="#!/contacts" onclick="showPage('contacts')">Контакты</a></li></span>
+        </ul>
+    </div></nav>
+    <div id="cart-widget">
+        <div id="cart-items">
+        </div>
+        <hr/>
+        <div id="cart-footer">
+            <button id="order-button" onclick="cart.orderClicked()">Заказать</button>
+            <div id="total-price">$0</div>
+        </div>
+    </div></div></div></div>
+</header>
+
+<div class="body-content">
+    <div class="page" id="catalog" style="display:none">
+        <div id="device-grid"></div>
+        <div id="device-filter">
+            <div id="filter-widget">
+                <p>Детализация</p>
+                <hr>
+                <form id="filter-form" action="#"></form>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="order" style="display:none">
+        <h1>Заказ</h1>
+    </div>
+    <div class="page" id="cart-page">
+        <h2>Корзина</h2>
+
+        <div id="cart-page-items"></div>
+        <div id="cart-page-footer">
+            <button id="return-to-catalog-button" onclick="redirect('phones/1')">Хочу купить что-то ещё</button>
+            <div id="pay-section">
+                <div id="total-page-price">$0</div>
+                <button id="pay-button" onclick="redirect('phones/1')">Заплатить</button>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="device-page">
+        <div id="device-wrapper"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-wrapper">
+        <div class="phone-contacts">
+            <h4>Звони нам!</h4>
+            <span>+327-29-678-88-88</span> <br/>
+            <span>+327-29-591-77-77</span> <br/>
+            <span>+327-29-456-56-56</span>
+        </div>
+        <div class="catalog-links left-bordered">
+            <h4>Каталог</h4>
+            <ul>
+                <li><a href="#!/phones/1">Телефоны</a></li>
+                <li><a href="#!/tablets/1">Планшеты</a></li>
+                <li><a href="#!/cameras/1">Фотоаппараты</a></li>
+                <li><a href="#!/players/1">Плееры</a></li>
+            </ul>
+        </div>
+        <div class="subscription left-bordered">
+            <input type="email" placeholder="Введите e-mail"/> </br>
+            <input type="submit" value="Подписаться"/>
+        </div>
+        <div class="trade-mark">
+            &copy; Atlas Market 2014
+        </div>
+    </div>
+</footer>
+
+<script type="text/template" id="device-short-template">
+
+    <div class="device-preview">
+        <div class="image-preview">
+            <img src=<%=device.itemThumbImgUrl%> onclick = "redirect('<%= device.category %>/i<%= device.index %>')"/>
+        </div>
+        <div class="description-preview">
+            <p onclick="redirect('<%= device.category %>/i<%= device.index %>')"><%= device.itemTitle %></p>
+
+            <p onclick="redirect('<%= device.category %>/i<%= device.index %>')">$<%= device.price.min %></p>
+        </div>
+        <div class="preview-buttons">
+            <ul>
+                <li><a onclick="cart.addItem('<%= device.category %>', <%= device.index %>)">В корзину</a></li>
+                <li><a>Сравнить</a></li>
+            </ul>
+        </div>
+    </div>
+
+</script>
+
+<script type="text/template" id="cart-item-template">
+    <div class="device-cart-view">
+        <div class="image-preview">
+            <img src=<%=device.itemThumbImgUrl%> />
+        </div>
+        <div class="description-preview">
+            <p><%= device.itemTitle %></p>
+
+            <p>$<%= device.price.min %>&nbsp(x<%= count %>)</p>
+        </div>
+        <div class="delete-button-container">
+            <button onclick="cart.deleteItem(<%= number %>)">Удалить</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="cart-page-item-template">
+    <div class="device-cart-view">
+        <div class="image-preview">
+            <img src=<%=device.itemThumbImgUrl%> />
+        </div>
+        <div class="description-preview">
+            <p><%= device.itemTitle %></p>
+            <p>$<%= device.price.min %></p>
+        </div>
+        <div class=count-editor>
+            <input type="number" onchange="cart.onCountChanged(<%= number%>, this.value)" value="<%= count %>"/>
+            <span id="total-item-price">$<%= totalItemPrice %></span>
+        </div>
+        <div class="delete-button-container">
+            <button onclick="cart.deleteItem(<%= number %>)">Удалить</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="device-template">
+    <div id="image-gallery"></div>
+    <h1><%= device.itemTitle %></h1>
+    <h2>$<%= device.price.min%></h2>
+    <div id="device-description"><p><%=device.shortDescr%></p></div>
+    <div id="device-buttons">
+        <button onclick="cart.addItem('<%= category %>', <%= index %>)">В корзину</button>
+        <button>Сравнить</button>
+    </div>
+    <div id="device-tabs">
+        <div id = "tab-buttons">
+            <button class = "tab-button selected" id="tech-info-tab-button">Техническое описание</button>
+            <button class = "tab-button" id="comments-tab-button">Отзывы</button>
+        </div>
+        <div id="tech-info-tab" class="device-tab"></div>
+        <div id="comments-tab" class="device-tab">
+            <h3>Оставьте свой отзыв</h3>
+            <hr>
+            <input type="text" placeholder="Имя">
+            <textarea>Текст отзыва</textarea>
+            <button>Опубликовать отзыв</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="image-gallery-template">
+    <div id="large-image">
+        <img src=<%=images[selected].fullSizeURL%> />
+    </div>
+    <div id="small-images">
+        <% for(var i = offset; i < offset + 3; i++){%>
+        <div onclick = "updateImageGallery('<%= category %>', <%=index%>, <%= i %>, <%= offset %>)" class="small-image <%= selected == i ? 'selected-image' : ''%>" >
+            <img  src=<%=images[i].thumbURL%> />
+        </div>
+        <% }; %>
+    </div>
+    <div id = "gallery-buttons">
+    <% if(offset > 0){%> <button onclick = "updateImageGallery('<%= category %>', <%=index%>, <%= selected %>, <%= offset -1 %>)"
+                                 id="scroll-gallery-left-button">&lt;</button> <% }; %>
+    <% if(offset < images.length - 3){%> <button onclick = "updateImageGallery('<%= category %>', <%=index%>, <%= selected %>, <%= offset + 1 %>)"
+                                                 id="scroll-gallery-right-button">&gt;</button> <% }; %>
+    </div>
+</script>
+
+<script type="text/template" id="tech-info-table-template">
+<table id="tech-info-table" border = '1'>
+    <% for(var propertyName in device.techInfo){
+        var property = device.techInfo[propertyName];
+        if(property.title && property.value){ %>
+        <tr>
+            <td><%= property.title %></td>
+            <td><%= property.value %></td>
+        </tr>
+    <% }}; %>
+</table>
+</script>
+
+<script src="js/underscore.js"></script>
+<script src="js/filter.js"></script>
+<script src="js/templating.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/devicepage.js"></script>
+<script src="js/routing.js"></script>
+
+</body>
+</html>
