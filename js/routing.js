@@ -6,7 +6,7 @@ function hideAll(){
 }
 
 function redirect(hash){
-    window.location.replace('http://localhost:63342/AtlasMarket/index.html#!/{0}'.format(hash));
+    window.location.hash = '#!/' + hash;
 }
 
 function show(pageName) {

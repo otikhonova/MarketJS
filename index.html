@@ -7,8 +7,8 @@
     <link rel="stylesheet" type="text/css" href="css/content_slider.css" />
     <link rel="stylesheet" type="text/css" href="css/menu.css" />
     <link rel="stylesheet" type="text/css" href="css/main.css" />
-    <script type="text/javascript" src="js/vendors/jquery.1.3.2.min.js" ></script>
-    <script type="text/javascript" src="js/vendors/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#featured > ul").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 5000, true);
@@ -28,15 +28,15 @@
                 </div><nav><ul><li id="cart-button"><a id="cart-label"  style="color: darkblue">Корзина </a><a id="cart-counter">0</a></li></ul></nav>
                 <nav> <div class="mainmenu">
         <ul>
-            <li class="nc"><a href="#" onclick=hideAllPages()>Главная</a></li>
-            <li class="nc"><a href="#" onclick="hideAllPages()">Магазин</a><ul class="ch">
-                <li class="nc"><a href="#!/phones/1" onclick="showPage('catalog')">Телефоны</a></li>
-                <li class="nc"><a href="#!/tablets/1" onclick="showPage('catalog')">Планшеты</a></li>
-                <li class="nc"><a href=#!/cameras/1" onclick="showPage('catalog')">Камеры</a></li>
-                <li class="nc"><a href="#!/players/1" onclick="showPage('catalog')">Аксессуары</a></li>
+            <li class="nc"><a href="#" onclick="hideAll()">Главная</a></li>
+            <li class="nc"><a href="#" onclick="hideAll()">Магазин</a><ul class="ch">
+                <li class="nc"><a href="#!/phones/1" onclick="show('catalog')">Телефоны</a></li>
+                <li class="nc"><a href="#!/tablets/1" onclick="show('catalog')">Планшеты</a></li>
+                <li class="nc"><a href="#!/cameras/1" onclick="show('catalog')">Камеры</a></li>
+                <li class="nc"><a href="#!/players/1" onclick="show('catalog')">Аксессуары</a></li>
             </ul></li><span class="nav-links">
                         <li class="nc"><a href="#!/booking">Заказ и доставка</a></li>
-                        <li class="nc"><a href="#!/contacts" onclick="showPage('contacts')">Контакты</a></li></span>
+                        <li class="nc"><a href="#!/contacts" onclick="show('contacts')">Контакты</a></li></span>
         </ul>
     </div></nav>
     <div id="cart-widget">
